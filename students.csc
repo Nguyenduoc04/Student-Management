@@ -1,0 +1,10 @@
+S001,Nguyen Van An,18,3.45
+S002,Tran Thi Bich,19,3.80
+S003,Le Hoang Nam,20,2.95
+S004,Pham Minh Quan,18,3.10
+S005,Vo Thi Lan,21,3.65
+S006,Do Duc Huy,22,2.75
+S007,Nguyen Ngoc Anh,19,3.90
+S008,Tran Quang Vinh,20,3.25
+S009,Hoang Thi Mai,18,3.55
+S010,Bui Tuan Kiet,21,2.85
