@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class StudentService {
     private final List<Student> students;
-    private String FILE = "students.csc";
+    private String FILE = "students.csv";
 
     public StudentService() {
         students = new ArrayList<>();
