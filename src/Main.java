@@ -14,8 +14,9 @@ public class Main {
         System.out.println("| 6. Sort by name                       |");
         System.out.println("| 7. Save to file                       |");
         System.out.println("| 8. Load from file                     |");
+        System.out.println("| 9. Show warning students              |");
+        System.out.println("| 10. Statistics                        |");
         System.out.println("| 0. Exit                               |");
-
     }
 
     public static void main(String[] args) {
@@ -71,6 +72,14 @@ public class Main {
                         System.out.print("Enter file name to load: ");
                         String fileName = sc.nextLine();
                         service.load(fileName);
+                        break;
+
+                    case 9:
+                        service.showWarningStudents();
+                        break;
+
+                    case 10:
+                        service.statistics();
                         break;
 
                     default:

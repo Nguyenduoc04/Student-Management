@@ -5,10 +5,7 @@ import model.Student;
 import util.FileUtil;
 import validation.InputValidator;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class StudentService {
     private final List<Student> students;
@@ -117,17 +114,13 @@ public class StudentService {
             System.out.println("No students available");
             return;
         }
-
         System.out.println("+------+------------------------------+-----+------+");
-        System.out.printf("| %-4s | %-28s | %-3s | %-4s |\n",
-                "ID", "Name", "Age", "GPA");
+        System.out.printf("| %-4s | %-28s | %-3s | %-4s | %-5s |\n", "ID", "Name", "Age", "GPA", "Grade");
         System.out.println("+------+------------------------------+-----+------+");
-
         for (Student s : students) {
-            System.out.printf("| %-4s | %-28s | %3d | %4.2f |\n",
-                    s.getId(), s.getName(), s.getAge(), s.getGpa());
+            System.out.printf("| %-4s | %-28s | %3d | %4.2f | %-5s |\n",
+                    s.getId(), s.getName(), s.getAge(), s.getGpa(), s.getLetterGrade() );
         }
-
         System.out.println("+------+------------------------------+-----+------+");
     }
 
@@ -165,6 +158,38 @@ public class StudentService {
         students.sort(Comparator.comparing(Student::getGpa).reversed());
         System.out.println("Sorted by GPA descending");
     }
+
+    public void showWarningStudents() {
+        boolean found = false;
+        for (Student s : students) {
+            if (s.isWarning()) {
+                if (!found)
+                    System.out.println("Academic Warning:");
+                System.out.println(s.display());
+                found = true;
+            }
+        } if (!found)
+            System.out.println("No students under warning");
+    }
+
+    public void statistics() {
+        if (students.isEmpty()) {
+            System.out.println("No data to analyze");
+            return;
+        }
+        double avg = students.stream() .mapToDouble(Student::getGpa) .average().orElse(0);
+        Student max = Collections.max( students, Comparator.comparing(Student::getGpa) );
+        Student min = Collections.min( students, Comparator.comparing(Student::getGpa) );
+        long weak = students.stream() .filter(Student::isWarning) .count();
+        System.out.println("===== STATISTICS =====");
+        System.out.printf("Average GPA: %.2f\n", avg);
+        System.out.printf("Top student: | %-4s | %-28s | %3d | %4.2f | %-5s |\n",
+                max.getId(), max.getName(), max.getAge(), max.getGpa(), max.getLetterGrade());
+        System.out.printf("Lowest GPA:  | %-4s | %-28s | %3d | %4.2f | %-5s |\n",
+                min.getId(), min.getName(), min.getAge(), min.getGpa(), min.getLetterGrade());
+        System.out.println("Weak students: " + weak + "/" + students.size());
+    }
+
 
     public void save() {
         FileUtil.writeToFile(FILE, students);
